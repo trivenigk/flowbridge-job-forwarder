@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  job-forwarder:
+    build: .
+    container_name: job-forwarder
+    restart: unless-stopped
+    volumes:
+      # Persist WhatsApp session across container restarts
+      - ./chrome-profile:/app/chrome-profile
+      # Persist OAuth token
+      - ./setup:/app/setup
+    env_file:
+      - .env
+    environment:
+      - CHROME_PROFILE_PATH=/app/chrome-profile
+      - CREDENTIALS_PATH=/app/setup/credentials.json
+      - TOKEN_PATH=/app/setup/token.json
+    ports:
+      # VNC for QR code scanning (connect with any VNC viewer)
+      - "5900:5900"
+    # Shared memory for Chrome
+    shm_size: "2gb"
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

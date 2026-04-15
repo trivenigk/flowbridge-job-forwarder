@@ -1,0 +1,7 @@
+__pycache__
+*.pyc
+agent.log
+chrome-profile
+.git
+*.md
+apps_script

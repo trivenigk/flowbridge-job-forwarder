@@ -1,0 +1,33 @@
+# Credentials & secrets
+setup/credentials.json
+setup/token.json
+.env
+
+# Chrome profile (contains WhatsApp session)
+chrome-profile/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Logs
+*.log
+agent.log
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+.docker/
+
+# Test files
+agent/test_*.py
+agent/queue_jobs.py
