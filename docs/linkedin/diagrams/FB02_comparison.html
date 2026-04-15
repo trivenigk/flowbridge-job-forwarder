@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI vs Rule-Based — Decision Framework</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3e 50%, #0d0d2b 100%);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    color: #e0e0ff;
+    width: 1200px;
+    height: 675px;
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .orb { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.2; }
+  .orb-1 { width: 400px; height: 400px; background: #00d4ff; top: -150px; left: -100px; }
+  .orb-2 { width: 350px; height: 350px; background: #ff6b9d; bottom: -100px; right: -80px; }
+
+  h2 {
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 6px;
+    position: relative; z-index: 1;
+  }
+  h2 span:first-child { color: #00d4ff; }
+  h2 span.vs { color: #555; margin: 0 8px; }
+  h2 span:nth-child(3) { color: #7b61ff; }
+  h2 span:nth-child(5) { color: #ff6b9d; }
+  .sub { text-align: center; color: #666; font-size: 14px; margin-bottom: 30px; position: relative; z-index: 1; }
+
+  .comparison {
+    display: grid;
+    grid-template-columns: 200px 1fr 1fr 1fr;
+    gap: 2px;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 30px;
+  }
+  .cell {
+    padding: 12px 16px;
+    font-size: 13px;
+    background: rgba(255,255,255,0.03);
+    display: flex;
+    align-items: center;
+  }
+  .header {
+    background: rgba(255,255,255,0.06);
+    font-weight: 700;
+    font-size: 14px;
+    justify-content: center;
+    text-align: center;
+    border-radius: 8px 8px 0 0;
+  }
+  .header.h-rule { color: #00d4ff; border-bottom: 2px solid #00d4ff; }
+  .header.h-local { color: #7b61ff; border-bottom: 2px solid #7b61ff; }
+  .header.h-cloud { color: #ff6b9d; border-bottom: 2px solid #ff6b9d; }
+  .label-cell {
+    color: #aaa;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .cell.best { background: rgba(0,255,136,0.08); }
+  .winner {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #00ff88;
+    margin-left: 8px;
+    flex-shrink: 0;
+  }
+
+  .decision-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    position: relative;
+    z-index: 1;
+  }
+  .decision {
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .decision h4 { font-size: 13px; margin-bottom: 8px; }
+  .decision.d1 h4 { color: #00d4ff; }
+  .decision.d2 h4 { color: #7b61ff; }
+  .decision.d3 h4 { color: #ff6b9d; }
+  .decision ul { list-style: none; padding: 0; }
+  .decision li {
+    font-size: 11px;
+    color: #999;
+    padding: 2px 0;
+    padding-left: 14px;
+    position: relative;
+  }
+  .decision li::before {
+    content: '>';
+    position: absolute;
+    left: 0;
+    color: #555;
+  }
+
+  .footer { text-align: center; color: #444; font-size: 11px; margin-top: 20px; position: relative; z-index: 1; }
+</style>
+</head>
+<body>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <h2><span>Rule-Based</span><span class="vs">vs</span><span>Local LLM</span><span class="vs">vs</span><span>Cloud API</span></h2>
+  <p class="sub">A decision framework from building FlowBridge</p>
+
+  <div class="comparison">
+    <div class="cell header" style="background:transparent;"></div>
+    <div class="cell header h-rule">Rule-Based</div>
+    <div class="cell header h-local">Local LLM (Ollama)</div>
+    <div class="cell header h-cloud">Cloud API (GPT-4)</div>
+
+    <div class="cell label-cell">Monthly Cost</div>
+    <div class="cell best">$0 <span class="winner"></span></div>
+    <div class="cell best">$0 <span class="winner"></span></div>
+    <div class="cell">$5–50</div>
+
+    <div class="cell label-cell">Speed / Email</div>
+    <div class="cell best">&lt; 100ms <span class="winner"></span></div>
+    <div class="cell">5–30 sec</div>
+    <div class="cell">1–3 sec</div>
+
+    <div class="cell label-cell">Company Extraction</div>
+    <div class="cell">85%</div>
+    <div class="cell">95%</div>
+    <div class="cell best">98% <span class="winner"></span></div>
+
+    <div class="cell label-cell">Dedup Accuracy</div>
+    <div class="cell">95%</div>
+    <div class="cell">98%</div>
+    <div class="cell best">99% <span class="winner"></span></div>
+
+    <div class="cell label-cell">Memory Usage</div>
+    <div class="cell best">~50 MB <span class="winner"></span></div>
+    <div class="cell">4–8 GB</div>
+    <div class="cell best">~50 MB <span class="winner"></span></div>
+
+    <div class="cell label-cell">Privacy</div>
+    <div class="cell best">Local <span class="winner"></span></div>
+    <div class="cell best">Local <span class="winner"></span></div>
+    <div class="cell">Data sent to API</div>
+
+    <div class="cell label-cell">Deterministic</div>
+    <div class="cell best">Yes <span class="winner"></span></div>
+    <div class="cell">No (temp)</div>
+    <div class="cell">No (temp)</div>
+  </div>
+
+  <div class="decision-box">
+    <div class="decision d1">
+      <h4>Use Rule-Based When:</h4>
+      <ul>
+        <li>Zero cost is mandatory</li>
+        <li>Content is semi-structured</li>
+        <li>Deterministic output needed</li>
+        <li>Volume &lt; 100/day</li>
+      </ul>
+    </div>
+    <div class="decision d2">
+      <h4>Use Local LLM When:</h4>
+      <ul>
+        <li>Content is unstructured</li>
+        <li>Privacy is critical</li>
+        <li>Summarization needed</li>
+        <li>8GB+ RAM available</li>
+      </ul>
+    </div>
+    <div class="decision d3">
+      <h4>Use Cloud API When:</h4>
+      <ul>
+        <li>Highest accuracy needed</li>
+        <li>Multi-language content</li>
+        <li>Low latency critical</li>
+        <li>Budget of $5-50/mo OK</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">FlowBridge Decision Framework — Triveni Ganta, 2026</div>
+</body>
+</html>

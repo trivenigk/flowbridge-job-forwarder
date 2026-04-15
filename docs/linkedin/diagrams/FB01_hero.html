@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FlowBridge — Hero Banner</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3e 50%, #0d0d2b 100%);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    color: #e0e0ff;
+    width: 1200px;
+    height: 628px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+  /* Animated gradient orbs */
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.4;
+  }
+  .orb-1 { width: 400px; height: 400px; background: #7b61ff; top: -100px; left: -100px; }
+  .orb-2 { width: 300px; height: 300px; background: #00d4ff; bottom: -80px; right: -60px; }
+  .orb-3 { width: 200px; height: 200px; background: #ff6b9d; top: 50%; left: 60%; }
+
+  .content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 900px;
+  }
+  .badge {
+    display: inline-block;
+    background: rgba(123,97,255,0.2);
+    border: 1px solid rgba(123,97,255,0.4);
+    color: #b8a4ff;
+    padding: 6px 20px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 24px;
+  }
+  h1 {
+    font-size: 56px;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    background: linear-gradient(90deg, #ffffff, #b8a4ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .subtitle {
+    font-size: 22px;
+    color: #8888bb;
+    margin-bottom: 36px;
+    line-height: 1.4;
+  }
+  .stats {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+  }
+  .stat .value {
+    font-size: 42px;
+    font-weight: 800;
+    background: linear-gradient(90deg, #00d4ff, #7b61ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .stat .label {
+    font-size: 12px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-top: 4px;
+  }
+  .author {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #555;
+    font-size: 14px;
+    z-index: 1;
+  }
+  .author span { color: #7b61ff; }
+</style>
+</head>
+<body>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <div class="content">
+    <div class="badge">Open Source Framework</div>
+    <h1>I Built a Zero-Cost Bot That Forwards Jobs to WhatsApp</h1>
+    <p class="subtitle">FlowBridge: Email-to-messaging automation in Docker. No APIs. No fees. No screen.</p>
+    <div class="stats">
+      <div class="stat">
+        <div class="value">$0</div>
+        <div class="label">Monthly Cost</div>
+      </div>
+      <div class="stat">
+        <div class="value">100%</div>
+        <div class="label">Delivery Rate</div>
+      </div>
+      <div class="stat">
+        <div class="value">0%</div>
+        <div class="label">Duplicates</div>
+      </div>
+      <div class="stat">
+        <div class="value">&lt;5s</div>
+        <div class="label">Crash Recovery</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="author">Triveni Ganta | <span>github.com/trivenigk/flowbridge-job-forwarder</span></div>
+</body>
+</html>
