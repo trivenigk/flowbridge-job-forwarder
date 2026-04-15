@@ -151,6 +151,12 @@ docker compose restart         # Restart
 
 **Total: $0/month**
 
+## Support
+
+If FlowBridge saves you time, consider buying me a coffee:
+
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-support-yellow?style=for-the-badge&logo=buy-me-a-coffee)](https://buymeacoffee.com/trivenigk)
+
 ## License
 
 MIT License. See [LICENSE](LICENSE).
@@ -158,3 +164,11 @@ MIT License. See [LICENSE](LICENSE).
 ## Author
 
 **Triveni Ganta** — [LinkedIn](https://www.linkedin.com/in/trivenigk/) | [GitHub](https://github.com/trivenigk)
+
+**Paper:** [Zenodo DOI — to be added]
+
+If you use FlowBridge in your work, please cite:
+```
+Ganta, T. (2026). FlowBridge: A Zero-Cost Generalized Framework for Cross-Platform
+Email-to-Messaging Automation. Zenodo. https://doi.org/10.5281/zenodo.XXXXXXX
+```

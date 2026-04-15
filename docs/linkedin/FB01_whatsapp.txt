@@ -1,0 +1,13 @@
+New paper + open source project!
+
+FlowBridge: Zero-cost email-to-WhatsApp job forwarding bot
+
+- 100% delivery accuracy
+- Zero duplicates (multi-signal dedup)
+- $0/month infrastructure
+- Runs in Docker, no screen needed
+
+Full paper: [DOI link]
+GitHub: [Link]
+
+#FlowBridge #OpenSource #Automation

@@ -1,0 +1,57 @@
+AI vs Rule-Based Automation: A Decision Framework from Building FlowBridge
+
+When I built FlowBridge -- a zero-cost email-to-WhatsApp job forwarding pipeline -- I faced the question every automation builder faces:
+
+Should I use AI or keep it rule-based?
+
+The answer isn't "always use AI." Here's the framework I developed.
+
+THE THREE APPROACHES
+
+Rule-Based: Regex, string matching, difflib similarity. $0/month.
+Local LLM: Ollama (llama3/mistral) on your machine. $0/month (needs 8GB RAM).
+Cloud LLM API: GPT-4, Claude, Gemini. $5-50/month.
+
+I chose rule-based. Here's why.
+
+ACCURACY TRADE-OFF
+
+Extract job title: Rule-based 100% vs Cloud API 100% (tie)
+Extract company: Rule-based 85% vs Cloud API 98% (AI wins)
+Detect duplicates: Rule-based 95% vs Cloud API 99% (close)
+Summarize: Rule-based N/A vs Cloud API 95% (AI only)
+
+For forwarding complete job postings, I didn't need summarization or 98% company extraction. Rule-based was enough.
+
+PROCESSING SPEED REALITY
+
+Nobody tells you about local LLMs:
+- Rule-based: <100ms per email
+- Local LLM: 5-30 SECONDS per email
+- Cloud API: 1-3 seconds per email
+
+THE DECISION FRAMEWORK
+
+Use Rule-Based when: semi-structured content, zero cost needed, deterministic output required, <100 items/day.
+
+Use Local LLM when: unstructured content, privacy matters, semantic understanding needed, 8GB+ RAM available.
+
+Use Cloud API when: highest accuracy matters, multi-language, summarization needed, budget available.
+
+THE HYBRID SWEET SPOT
+
+Layer them: Rule-Based (handles 85%) --> Local LLM (catches 13%) --> Cloud API (fallback 2%). Total: 99%+ accuracy at ~$1/month.
+
+WHAT I LEARNED
+
+1. Start rule-based. You can always add AI later.
+2. Measure accuracy at each layer. Don't assume AI is better.
+3. Deduplication doesn't need AI. difflib at 70% threshold caught every duplicate.
+4. The real cost of AI isn't the API call. It's the prompt engineering and debugging.
+
+FlowBridge processes 11+ jobs daily with 100% accuracy using zero AI. Sometimes the simplest choice is the best one.
+
+Paper: [DOI link]
+GitHub: [Link]
+
+#AI #MachineLearning #Automation #DecisionFramework #RuleBasedVsAI #LLM #Python #FlowBridge
