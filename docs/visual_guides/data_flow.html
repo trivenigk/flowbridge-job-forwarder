@@ -5,51 +5,65 @@
 <title>FlowBridge Data Flow</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html, body { width: 100vw; height: 100vh; overflow: hidden; }
+  html, body { width: 100%; height: 100vh; overflow: hidden; }
   body {
-    background: #fafafa;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", system-ui, sans-serif;
+    background: #fbfbfd;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", system-ui, sans-serif;
     color: #1d1d1f;
-    padding: 60px 80px;
+    -webkit-font-smoothing: antialiased;
     display: flex;
     flex-direction: column;
+    padding: 56px 80px 40px;
   }
 
-  header { text-align: center; margin-bottom: 48px; }
+  header { text-align: center; margin-bottom: 56px; }
   h1 {
-    font-size: 36px;
+    font-size: 44px;
     font-weight: 600;
-    letter-spacing: -0.5px;
-    margin-bottom: 8px;
+    letter-spacing: -0.8px;
+    margin-bottom: 10px;
   }
-  .sub { font-size: 16px; color: #86868b; font-weight: 400; }
+  .sub {
+    font-size: 17px;
+    color: #6e6e73;
+    font-weight: 400;
+  }
 
-  .main-flow {
-    display: grid;
-    grid-template-columns: 1fr 60px 1fr 60px 1fr;
-    gap: 0;
+  .flow {
+    display: flex;
     align-items: center;
-    margin-bottom: 40px;
+    justify-content: center;
+    gap: 32px;
+    margin-bottom: 56px;
   }
 
-  .step {
+  .node {
     background: #ffffff;
     border: 1px solid #e8e8ed;
-    border-radius: 16px;
-    padding: 28px 24px;
+    border-radius: 20px;
+    padding: 36px 32px;
     text-align: center;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    width: 260px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.04);
   }
-
-  .step .icon { font-size: 44px; margin-bottom: 12px; }
-  .step h3 { font-size: 17px; font-weight: 600; margin-bottom: 4px; }
-  .step p { font-size: 12px; color: #86868b; line-height: 1.5; }
+  .node .icon { font-size: 52px; margin-bottom: 14px; }
+  .node h3 { font-size: 19px; font-weight: 600; margin-bottom: 6px; letter-spacing: -0.2px; }
+  .node p { font-size: 13px; color: #6e6e73; line-height: 1.5; }
 
   .arrow {
-    font-size: 24px;
     color: #d2d2d7;
-    text-align: center;
+    font-size: 28px;
     font-weight: 300;
+  }
+
+  .engines-label {
+    text-align: center;
+    font-size: 12px;
+    color: #86868b;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 500;
+    margin-bottom: 16px;
   }
 
   .engines {
@@ -62,38 +76,51 @@
     background: #ffffff;
     border: 1px solid #e8e8ed;
     border-radius: 12px;
-    padding: 14px 12px;
+    padding: 18px 16px;
     text-align: center;
   }
   .engine h4 {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
     color: #1d1d1f;
     margin-bottom: 4px;
+    letter-spacing: -0.1px;
   }
   .engine p {
-    font-size: 10.5px;
+    font-size: 11px;
     color: #86868b;
     line-height: 1.4;
   }
 
-  .note {
-    text-align: center;
-    font-size: 13px;
-    color: #86868b;
-    padding: 16px;
-    background: #ffffff;
-    border: 1px solid #e8e8ed;
-    border-radius: 12px;
+  .principles {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: auto;
+    padding-top: 24px;
+    border-top: 1px solid #e8e8ed;
   }
-  .note strong { color: #1d1d1f; font-weight: 500; }
+  .principle {
+    text-align: center;
+  }
+  .principle strong {
+    display: block;
+    font-size: 14px;
+    color: #1d1d1f;
+    font-weight: 600;
+    margin-bottom: 2px;
+    letter-spacing: -0.1px;
+  }
+  .principle span {
+    font-size: 11px;
+    color: #86868b;
+  }
 
   footer {
     text-align: center;
     color: #86868b;
     font-size: 11px;
-    margin-top: auto;
-    padding-top: 20px;
+    margin-top: 20px;
   }
 </style>
 </head>
@@ -103,38 +130,39 @@
     <div class="sub">No middlemen. No external servers. No telemetry.</div>
   </header>
 
-  <div class="main-flow">
-    <div class="step">
+  <div class="flow">
+    <div class="node">
       <div class="icon">📧</div>
       <h3>Your Gmail</h3>
-      <p>OAuth read-only scan</p>
+      <p>OAuth 2.0 read-only scan</p>
     </div>
     <div class="arrow">→</div>
-    <div class="step">
+    <div class="node">
       <div class="icon">📊</div>
-      <h3>Your Google Sheet</h3>
-      <p>Queue + Groups in your own storage</p>
+      <h3>Your Sheet</h3>
+      <p>Queue + Groups in your storage</p>
     </div>
     <div class="arrow">→</div>
-    <div class="step">
+    <div class="node">
       <div class="icon">💬</div>
       <h3>Your WhatsApp</h3>
       <p>Your session, your groups</p>
     </div>
   </div>
 
+  <div class="engines-label">Core Subsystems</div>
   <div class="engines">
     <div class="engine">
       <h4>DedupGuard</h4>
-      <p>4-signal deduplication</p>
+      <p>4-signal dedup</p>
     </div>
     <div class="engine">
       <h4>ClipCast</h4>
-      <p>Emoji-safe delivery</p>
+      <p>Emoji-safe paste</p>
     </div>
     <div class="engine">
       <h4>SessionHeal</h4>
-      <p>Auto crash recovery</p>
+      <p>Crash recovery</p>
     </div>
     <div class="engine">
       <h4>SheetConfig</h4>
@@ -142,14 +170,29 @@
     </div>
     <div class="engine">
       <h4>BatchForge</h4>
-      <p>Combined messages</p>
+      <p>Combined sends</p>
     </div>
   </div>
 
-  <div class="note">
-    <strong>Zero telemetry</strong> · <strong>Zero external servers</strong> · <strong>Zero recurring cost</strong> · <strong>100% your data</strong>
+  <div class="principles">
+    <div class="principle">
+      <strong>Zero telemetry</strong>
+      <span>Nothing phones home</span>
+    </div>
+    <div class="principle">
+      <strong>Zero external servers</strong>
+      <span>Runs on your machine</span>
+    </div>
+    <div class="principle">
+      <strong>Zero recurring cost</strong>
+      <span>Free-tier APIs only</span>
+    </div>
+    <div class="principle">
+      <strong>100% your data</strong>
+      <span>You own it all</span>
+    </div>
   </div>
 
-  <footer>FlowBridge · github.com/trivenigk/flowbridge-job-forwarder</footer>
+  <footer>FlowBridge  ·  github.com/trivenigk/flowbridge-job-forwarder</footer>
 </body>
 </html>
