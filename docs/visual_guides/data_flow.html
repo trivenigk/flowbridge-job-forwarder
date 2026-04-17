@@ -5,150 +5,151 @@
 <title>FlowBridge Data Flow</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100vw; height: 100vh; overflow: hidden; }
   body {
-    background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3e 100%);
-    font-family: 'Segoe UI', system-ui, sans-serif;
-    color: #e0e0ff;
-    width: 1200px;
-    height: 700px;
-    padding: 40px;
-    position: relative;
-    overflow: hidden;
+    background: #fafafa;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", system-ui, sans-serif;
+    color: #1d1d1f;
+    padding: 60px 80px;
+    display: flex;
+    flex-direction: column;
   }
-  .orb { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.2; }
-  .orb-1 { width: 400px; height: 400px; background: #00d4ff; top: -100px; left: 40%; }
 
+  header { text-align: center; margin-bottom: 48px; }
   h1 {
-    font-size: 30px;
-    text-align: center;
+    font-size: 36px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
     margin-bottom: 8px;
-    background: linear-gradient(90deg, #00d4ff, #7b61ff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    position: relative; z-index: 1;
   }
-  .sub { text-align: center; color: #888; font-size: 14px; margin-bottom: 40px; position: relative; z-index: 1; }
+  .sub { font-size: 16px; color: #86868b; font-weight: 400; }
 
-  .flow {
+  .main-flow {
     display: grid;
     grid-template-columns: 1fr 60px 1fr 60px 1fr;
     gap: 0;
     align-items: center;
-    position: relative;
-    z-index: 1;
     margin-bottom: 40px;
   }
 
-  .box {
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(10px);
-    border: 2px solid;
+  .step {
+    background: #ffffff;
+    border: 1px solid #e8e8ed;
     border-radius: 16px;
-    padding: 20px;
+    padding: 28px 24px;
     text-align: center;
-  }
-  .box.source { border-color: #00d4ff; }
-  .box.storage { border-color: #7b61ff; }
-  .box.output { border-color: #ff6b9d; }
-  .box .icon { font-size: 40px; margin-bottom: 8px; }
-  .box .name { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
-  .box.source .name { color: #00d4ff; }
-  .box.storage .name { color: #7b61ff; }
-  .box.output .name { color: #ff6b9d; }
-  .box .desc { font-size: 12px; color: #999; line-height: 1.4; }
-
-  .arrow-lg {
-    font-size: 40px;
-    color: #555;
-    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
 
-  .engine-row {
+  .step .icon { font-size: 44px; margin-bottom: 12px; }
+  .step h3 { font-size: 17px; font-weight: 600; margin-bottom: 4px; }
+  .step p { font-size: 12px; color: #86868b; line-height: 1.5; }
+
+  .arrow {
+    font-size: 24px;
+    color: #d2d2d7;
+    text-align: center;
+    font-weight: 300;
+  }
+
+  .engines {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 16px;
-    position: relative;
-    z-index: 1;
-    margin-top: 30px;
+    gap: 12px;
+    margin-bottom: 32px;
   }
   .engine {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: #ffffff;
+    border: 1px solid #e8e8ed;
     border-radius: 12px;
-    padding: 14px;
+    padding: 14px 12px;
     text-align: center;
   }
-  .engine h4 { font-size: 13px; margin-bottom: 4px; }
-  .engine:nth-child(1) h4 { color: #00d4ff; }
-  .engine:nth-child(2) h4 { color: #7b61ff; }
-  .engine:nth-child(3) h4 { color: #ff6b9d; }
-  .engine:nth-child(4) h4 { color: #00ff88; }
-  .engine:nth-child(5) h4 { color: #ffc107; }
-  .engine p { font-size: 11px; color: #888; line-height: 1.4; }
+  .engine h4 {
+    font-size: 12px;
+    font-weight: 600;
+    color: #1d1d1f;
+    margin-bottom: 4px;
+  }
+  .engine p {
+    font-size: 10.5px;
+    color: #86868b;
+    line-height: 1.4;
+  }
 
-  .flow-note {
+  .note {
     text-align: center;
-    color: #666;
     font-size: 13px;
-    margin-top: 30px;
-    font-style: italic;
-    position: relative;
-    z-index: 1;
+    color: #86868b;
+    padding: 16px;
+    background: #ffffff;
+    border: 1px solid #e8e8ed;
+    border-radius: 12px;
   }
-  .footer { text-align: center; color: #444; font-size: 11px; margin-top: 20px; position: relative; z-index: 1; }
+  .note strong { color: #1d1d1f; font-weight: 500; }
+
+  footer {
+    text-align: center;
+    color: #86868b;
+    font-size: 11px;
+    margin-top: auto;
+    padding-top: 20px;
+  }
 </style>
 </head>
 <body>
-  <div class="orb orb-1"></div>
+  <header>
+    <h1>Your Data. Your Machine.</h1>
+    <div class="sub">No middlemen. No external servers. No telemetry.</div>
+  </header>
 
-  <h1>FlowBridge Data Flow</h1>
-  <p class="sub">Your data. Your machine. No middlemen.</p>
-
-  <div class="flow">
-    <div class="box source">
+  <div class="main-flow">
+    <div class="step">
       <div class="icon">📧</div>
-      <div class="name">YOUR Gmail</div>
-      <div class="desc">OAuth 2.0<br/>read-only scan</div>
+      <h3>Your Gmail</h3>
+      <p>OAuth read-only scan</p>
     </div>
-    <div class="arrow-lg">→</div>
-    <div class="box storage">
+    <div class="arrow">→</div>
+    <div class="step">
       <div class="icon">📊</div>
-      <div class="name">YOUR Google Sheet</div>
-      <div class="desc">Queue + Groups<br/>your storage</div>
+      <h3>Your Google Sheet</h3>
+      <p>Queue + Groups in your own storage</p>
     </div>
-    <div class="arrow-lg">→</div>
-    <div class="box output">
+    <div class="arrow">→</div>
+    <div class="step">
       <div class="icon">💬</div>
-      <div class="name">YOUR WhatsApp</div>
-      <div class="desc">Your session<br/>your groups</div>
+      <h3>Your WhatsApp</h3>
+      <p>Your session, your groups</p>
     </div>
   </div>
 
-  <div class="engine-row">
+  <div class="engines">
     <div class="engine">
       <h4>DedupGuard</h4>
-      <p>Stops duplicate job alerts via 4-signal dedup</p>
+      <p>4-signal deduplication</p>
     </div>
     <div class="engine">
       <h4>ClipCast</h4>
-      <p>JS paste bypass for emoji-rich messages</p>
+      <p>Emoji-safe delivery</p>
     </div>
     <div class="engine">
       <h4>SessionHeal</h4>
-      <p>Auto-recovers Chrome crashes in Docker</p>
+      <p>Auto crash recovery</p>
     </div>
     <div class="engine">
       <h4>SheetConfig</h4>
-      <p>Manage groups via Sheet tab, no restart</p>
+      <p>Dynamic groups</p>
     </div>
     <div class="engine">
       <h4>BatchForge</h4>
-      <p>Combines N jobs into 1 message per group</p>
+      <p>Combined messages</p>
     </div>
   </div>
 
-  <p class="flow-note">⚡ Zero telemetry · Zero external servers · Zero recurring cost · 100% your data</p>
+  <div class="note">
+    <strong>Zero telemetry</strong> · <strong>Zero external servers</strong> · <strong>Zero recurring cost</strong> · <strong>100% your data</strong>
+  </div>
 
-  <div class="footer">FlowBridge — github.com/trivenigk/flowbridge-job-forwarder</div>
+  <footer>FlowBridge · github.com/trivenigk/flowbridge-job-forwarder</footer>
 </body>
 </html>
