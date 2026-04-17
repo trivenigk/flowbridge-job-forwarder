@@ -1,7 +1,15 @@
-# Credentials & secrets
+# Credentials & secrets — NEVER commit
 setup/credentials.json
 setup/token.json
+setup/*.json
 .env
+.env.local
+.env.*.local
+**/credentials*.json
+**/token*.json
+**/oauth*.json
+*.pem
+*.key
 
 # Chrome profile (contains WhatsApp session)
 chrome-profile/

@@ -233,7 +233,32 @@ def format_message(job: dict) -> str:
     Returns:
         Formatted message string, body truncated to MESSAGE_MAX_LENGTH.
     """
+    import re
     body = job.get("body", "").strip()
+    # Clean body: collapse multiple blank lines, strip CSS/HTML remnants
+    body = re.sub(r'<style[^>]*>.*?</style>', '', body, flags=re.IGNORECASE | re.DOTALL)
+    body = re.sub(r'<[^>]+>', '', body)
+    body = re.sub(r'@import\s+url\([^)]*\);?', '', body)
+    body = re.sub(r'\{[^}]*\}', '', body)  # remove CSS blocks { ... }
+    body = re.sub(r'https?://\S+', '', body)  # remove URLs
+    body = re.sub(r'&[a-zA-Z]+;', ' ', body)  # remove HTML entities
+    body = re.sub(r'-{5,}', '', body)  # remove long dashes
+    # Remove personal name references
+    body = re.sub(r'\bTriveni\b\s*(Ganta|Gopala Krishna Ganta)?', '', body, flags=re.IGNORECASE)
+    body = re.sub(r'(Hi|Hello|Dear|Hey)\s*,?\s*\n?', '', body, count=2)  # strip greetings
+    # Collapse whitespace
+    lines = [line.strip() for line in body.split('\n')]
+    cleaned = []
+    blank_count = 0
+    for line in lines:
+        if not line:
+            blank_count += 1
+            if blank_count <= 1:
+                cleaned.append('')
+        else:
+            blank_count = 0
+            cleaned.append(line)
+    body = '\n'.join(cleaned).strip()
     if len(body) > MESSAGE_MAX_LENGTH:
         body = body[:MESSAGE_MAX_LENGTH] + "..."
 

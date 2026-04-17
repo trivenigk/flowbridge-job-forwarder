@@ -28,38 +28,25 @@ Gmail Inbox --> Google Sheet (Queue) --> Docker Agent --> WhatsApp Groups
 
 See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the full system design.
 
-## Quick Start (Docker)
+## Quick Start — One-Command Setup
 
-### 1. Clone and configure
-
-```bash
-git clone https://github.com/trivenigk/job-forwarder.git
-cd job-forwarder
-cp .env.example .env
-# Edit .env with your Google Sheet ID
+**Windows (PowerShell):**
+```powershell
+git clone https://github.com/trivenigk/flowbridge-job-forwarder.git
+cd flowbridge-job-forwarder
+.\scripts\setup-windows.ps1
 ```
 
-### 2. Set up Google OAuth
-
-- Create an OAuth 2.0 Desktop client in [Google Cloud Console](https://console.cloud.google.com)
-- Enable Google Sheets API and Google Drive API
-- Download credentials to `setup/credentials.json`
-- Run `cd agent && python -c "from sheets import _get_creds; _get_creds()"` to authenticate
-
-### 3. Build and run
-
+**macOS / Linux:**
 ```bash
-docker compose build
-docker compose up -d
+git clone https://github.com/trivenigk/flowbridge-job-forwarder.git
+cd flowbridge-job-forwarder
+bash scripts/setup-macos.sh   # or setup-linux.sh
 ```
 
-### 4. Scan WhatsApp QR code (one time)
+The script handles Docker build, `.env` creation, folder setup, and starts the container.
 
-Connect a VNC viewer to `localhost:5900` and scan the QR code with your phone.
-
-### 5. Add jobs to the Queue tab, manage groups in the Groups tab
-
-That's it. The agent polls every 2 hours, deduplicates, and sends.
+**Need details?** See full docs below ↓
 
 ## Google Sheet Structure
 
@@ -121,12 +108,22 @@ docker compose restart         # Restart
 
 ## Documentation
 
+### Getting Started (Read in Order)
+| Document | Time | Description |
+|----------|------|-------------|
+| [PREREQUISITES.md](docs/PREREQUISITES.md) | 5 min | Hardware, accounts, software, warnings |
+| [QUICKSTART.md](docs/QUICKSTART.md) | 25 min | Step-by-step beginner-friendly setup |
+| [GOOGLE_CLOUD_SETUP.md](docs/GOOGLE_CLOUD_SETUP.md) | 10 min | OAuth walkthrough with visual guides |
+
+### Reference
 | Document | Description |
 |----------|-------------|
-| [Architecture](docs/ARCHITECTURE.md) | System design, data flow, components |
-| [Setup Guide](docs/SETUP_GUIDE.md) | Detailed step-by-step setup instructions |
-| [Research Paper](docs/PAPER.md) | Academic paper with AI vs non-AI comparison |
-| [Patent Claims](docs/PATENT_CLAIMS.md) | Provisional patent claims |
+| [TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) | Common errors and fixes |
+| [USE_CASES.md](docs/USE_CASES.md) | Beyond jobs — sales, alerts, research, more |
+| [FAQ.md](docs/FAQ.md) | Safety, privacy, technical, cost questions |
+| [ARCHITECTURE.md](docs/ARCHITECTURE.md) | System design, data flow, components |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | How to contribute |
+| [PAPER.md](docs/PAPER.md) | Academic paper with AI vs rule-based analysis |
 
 ## FlowBridge Subsystems
 

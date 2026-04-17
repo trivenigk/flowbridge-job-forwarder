@@ -12,6 +12,7 @@ import time
 import schedule
 
 from config import CHECK_INTERVAL_SECONDS, LOG_FILE
+from gmail_ingest import ingest_gmail_jobs
 from sheets import get_pending_jobs, mark_sent, mark_failed, get_groups
 from whatsapp import WhatsAppSender, format_message
 
@@ -50,12 +51,29 @@ def _handle_signal(signum, _frame):
 
 
 def process_jobs() -> None:
-    """Fetch pending jobs from the sheet and send each to all WhatsApp groups."""
+    """Scan Gmail for new jobs, then send pending jobs to WhatsApp groups."""
+    # Step 1: Ingest new job emails from Gmail into the Sheet
     try:
-        jobs = get_pending_jobs()
+        new_count = ingest_gmail_jobs()
+        if new_count:
+            logger.info("Ingested %d new job(s) from Gmail", new_count)
     except Exception:
-        logger.exception("Failed to fetch jobs from Google Sheet")
-        return
+        logger.exception("Gmail ingestion failed — continuing with existing queue")
+
+    # Step 2: Fetch pending jobs from Sheet (retry with backoff)
+    jobs = None
+    for attempt in range(1, 4):
+        try:
+            jobs = get_pending_jobs()
+            break
+        except Exception:
+            if attempt < 3:
+                wait = attempt * 30
+                logger.warning("Sheet fetch failed (attempt %d/3), retrying in %ds...", attempt, wait)
+                time.sleep(wait)
+            else:
+                logger.exception("Failed to fetch jobs from Google Sheet after 3 attempts")
+                return
 
     if not jobs:
         logger.info("No pending jobs — sleeping")

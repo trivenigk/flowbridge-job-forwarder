@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>FlowBridge Data Flow</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3e 100%);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    color: #e0e0ff;
+    width: 1200px;
+    height: 700px;
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .orb { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.2; }
+  .orb-1 { width: 400px; height: 400px; background: #00d4ff; top: -100px; left: 40%; }
+
+  h1 {
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 8px;
+    background: linear-gradient(90deg, #00d4ff, #7b61ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative; z-index: 1;
+  }
+  .sub { text-align: center; color: #888; font-size: 14px; margin-bottom: 40px; position: relative; z-index: 1; }
+
+  .flow {
+    display: grid;
+    grid-template-columns: 1fr 60px 1fr 60px 1fr;
+    gap: 0;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 40px;
+  }
+
+  .box {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    border: 2px solid;
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+  }
+  .box.source { border-color: #00d4ff; }
+  .box.storage { border-color: #7b61ff; }
+  .box.output { border-color: #ff6b9d; }
+  .box .icon { font-size: 40px; margin-bottom: 8px; }
+  .box .name { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .box.source .name { color: #00d4ff; }
+  .box.storage .name { color: #7b61ff; }
+  .box.output .name { color: #ff6b9d; }
+  .box .desc { font-size: 12px; color: #999; line-height: 1.4; }
+
+  .arrow-lg {
+    font-size: 40px;
+    color: #555;
+    text-align: center;
+  }
+
+  .engine-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    position: relative;
+    z-index: 1;
+    margin-top: 30px;
+  }
+  .engine {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 14px;
+    text-align: center;
+  }
+  .engine h4 { font-size: 13px; margin-bottom: 4px; }
+  .engine:nth-child(1) h4 { color: #00d4ff; }
+  .engine:nth-child(2) h4 { color: #7b61ff; }
+  .engine:nth-child(3) h4 { color: #ff6b9d; }
+  .engine:nth-child(4) h4 { color: #00ff88; }
+  .engine:nth-child(5) h4 { color: #ffc107; }
+  .engine p { font-size: 11px; color: #888; line-height: 1.4; }
+
+  .flow-note {
+    text-align: center;
+    color: #666;
+    font-size: 13px;
+    margin-top: 30px;
+    font-style: italic;
+    position: relative;
+    z-index: 1;
+  }
+  .footer { text-align: center; color: #444; font-size: 11px; margin-top: 20px; position: relative; z-index: 1; }
+</style>
+</head>
+<body>
+  <div class="orb orb-1"></div>
+
+  <h1>FlowBridge Data Flow</h1>
+  <p class="sub">Your data. Your machine. No middlemen.</p>
+
+  <div class="flow">
+    <div class="box source">
+      <div class="icon">📧</div>
+      <div class="name">YOUR Gmail</div>
+      <div class="desc">OAuth 2.0<br/>read-only scan</div>
+    </div>
+    <div class="arrow-lg">→</div>
+    <div class="box storage">
+      <div class="icon">📊</div>
+      <div class="name">YOUR Google Sheet</div>
+      <div class="desc">Queue + Groups<br/>your storage</div>
+    </div>
+    <div class="arrow-lg">→</div>
+    <div class="box output">
+      <div class="icon">💬</div>
+      <div class="name">YOUR WhatsApp</div>
+      <div class="desc">Your session<br/>your groups</div>
+    </div>
+  </div>
+
+  <div class="engine-row">
+    <div class="engine">
+      <h4>DedupGuard</h4>
+      <p>Stops duplicate job alerts via 4-signal dedup</p>
+    </div>
+    <div class="engine">
+      <h4>ClipCast</h4>
+      <p>JS paste bypass for emoji-rich messages</p>
+    </div>
+    <div class="engine">
+      <h4>SessionHeal</h4>
+      <p>Auto-recovers Chrome crashes in Docker</p>
+    </div>
+    <div class="engine">
+      <h4>SheetConfig</h4>
+      <p>Manage groups via Sheet tab, no restart</p>
+    </div>
+    <div class="engine">
+      <h4>BatchForge</h4>
+      <p>Combines N jobs into 1 message per group</p>
+    </div>
+  </div>
+
+  <p class="flow-note">⚡ Zero telemetry · Zero external servers · Zero recurring cost · 100% your data</p>
+
+  <div class="footer">FlowBridge — github.com/trivenigk/flowbridge-job-forwarder</div>
+</body>
+</html>

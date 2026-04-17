@@ -15,10 +15,22 @@ WHATSAPP_WEB_URL = "https://web.whatsapp.com"
 CHROME_PROFILE_PATH = os.getenv("CHROME_PROFILE_PATH", "")  # path to existing Chrome profile so WA stays logged in
 
 # Agent
-CHECK_INTERVAL_SECONDS = 7200  # check every 2 hours
+CHECK_INTERVAL_SECONDS = 3600  # check every 1 hour
 LOG_FILE = "agent.log"
 MAX_RETRIES = 3
 MESSAGE_MAX_LENGTH = 2000
+
+# Gmail ingestion
+GMAIL_SEARCH_QUERY = os.getenv(
+    "GMAIL_SEARCH_QUERY",
+    "newer_than:1d -from:me -category:social "
+    "subject:(engineer OR developer OR data OR hiring OR opportunity OR position "
+    "OR role OR consultant OR architect OR python OR azure OR AWS OR GCP OR cloud "
+    "OR SQL OR spark OR analyst OR remote OR onsite OR hybrid OR contract OR perm "
+    "OR fullstack OR backend OR frontend OR devops OR manager OR lead OR urgent "
+    "OR immediate OR job OR opening)"
+)
+GMAIL_MAX_RESULTS = 30
 
 # Credentials (OAuth 2.0 — user login, no service account key needed)
 _base = os.path.dirname(os.path.abspath(__file__))
