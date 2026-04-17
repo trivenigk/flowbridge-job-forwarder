@@ -6,6 +6,24 @@
 
 No APIs to pay for. No manual copy-paste. No screen blocking. Just Docker + a Google Sheet.
 
+---
+
+## ⚠️ Before You Install — Know This
+
+FlowBridge runs **on YOUR machine**, not in the cloud. For it to keep working:
+
+- 🖥️ **Docker Desktop must stay running** — close it, bot stops
+- 🔌 **Computer must stay awake + online** — sleep/wifi-drop = pause
+- 🔐 **Google account must stay authorized** — revoke = bot breaks
+- 📱 **WhatsApp phone must open once per 14 days** — Meta policy
+- 📊 **Google Sheet must exist** — delete it = lose queue
+- ⚡ **Unofficial WhatsApp Web automation** — account ban risk exists
+- 👥 **Get group consent before adding bot** — people treat it as spam
+
+**Full details:** [HOW_IT_WORKS.md](docs/HOW_IT_WORKS.md) — read before install
+
+---
+
 ## Features
 
 - **Zero cost** — Uses only free-tier Google APIs, open-source tools, and Docker
@@ -111,6 +129,7 @@ docker compose restart         # Restart
 ### Getting Started (Read in Order)
 | Document | Time | Description |
 |----------|------|-------------|
+| [HOW_IT_WORKS.md](docs/HOW_IT_WORKS.md) | 5 min | **Operational warnings — read first** |
 | [PREREQUISITES.md](docs/PREREQUISITES.md) | 5 min | Hardware, accounts, software, warnings |
 | [QUICKSTART.md](docs/QUICKSTART.md) | 25 min | Step-by-step beginner-friendly setup |
 | [GOOGLE_CLOUD_SETUP.md](docs/GOOGLE_CLOUD_SETUP.md) | 10 min | OAuth walkthrough with visual guides |
