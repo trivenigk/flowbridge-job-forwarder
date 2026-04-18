@@ -169,20 +169,26 @@ docker compose restart         # Restart
 
 ## Support
 
-If FlowBridge saves you time, support is appreciated. **All options below have 0% platform fee** (Buy Me a Coffee charges ~8% — skipped intentionally).
+If FlowBridge saves you time, support is appreciated. **Both options below have 0% fees** (Buy Me a Coffee charges ~8% — skipped intentionally).
 
-### Zero-fee direct (preferred)
-| Method | For | Link |
-|--------|-----|------|
-| ![Zelle](https://img.shields.io/badge/Zelle-USA-purple?style=for-the-badge&logo=zelle) | US senders | `trivenigk@gmail.com` |
-| ![UPI](https://img.shields.io/badge/UPI-India-orange?style=for-the-badge) | India senders | `trivenigk@oksbi` (or your UPI handle) |
+### 🇺🇸 Zelle (US)
 
-### Other options
-| Method | Fee | Link |
-|--------|-----|------|
-| [![GitHub Sponsors](https://img.shields.io/badge/GitHub%20Sponsors-0%25%20fee-pink?style=for-the-badge&logo=github)](https://github.com/sponsors/trivenigk) | 0% | github.com/sponsors/trivenigk |
-| [![Ko-fi](https://img.shields.io/badge/Ko--fi-0%25%20platform%20fee-red?style=for-the-badge&logo=ko-fi)](https://ko-fi.com/trivenigk) | 0% platform + 3% Stripe | ko-fi.com/trivenigk |
-| [![PayPal](https://img.shields.io/badge/PayPal-Friends%20%26%20Family-blue?style=for-the-badge&logo=paypal)](https://paypal.me/trivenigk) | 0% F&F | paypal.me/trivenigk |
+**Email:** `trivenigk@hotmail.com`
+**Name:** Triveni Ganta
+
+<img src="docs/payment/zelle_qr.png" alt="Zelle QR" width="240"/>
+
+### 🇮🇳 UPI / PhonePe (India)
+
+**Name:** Triveni Gopala Krishna Ganta
+
+<img src="docs/payment/upi_qr.png" alt="UPI PhonePe QR" width="240"/>
+
+*Scan QR with any UPI app: PhonePe, GPay, Paytm, BHIM*
+
+---
+
+**Why no Buy Me a Coffee / Patreon?** Those charge 5–12% platform fee + processor fee. Direct peer-to-peer transfers are zero-cost.
 
 ## License
 
