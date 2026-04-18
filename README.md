@@ -169,9 +169,20 @@ docker compose restart         # Restart
 
 ## Support
 
-If FlowBridge saves you time, consider buying me a coffee:
+If FlowBridge saves you time, support is appreciated. **All options below have 0% platform fee** (Buy Me a Coffee charges ~8% — skipped intentionally).
 
-[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-support-yellow?style=for-the-badge&logo=buy-me-a-coffee)](https://buymeacoffee.com/trivenigk)
+### Zero-fee direct (preferred)
+| Method | For | Link |
+|--------|-----|------|
+| ![Zelle](https://img.shields.io/badge/Zelle-USA-purple?style=for-the-badge&logo=zelle) | US senders | `trivenigk@gmail.com` |
+| ![UPI](https://img.shields.io/badge/UPI-India-orange?style=for-the-badge) | India senders | `trivenigk@oksbi` (or your UPI handle) |
+
+### Other options
+| Method | Fee | Link |
+|--------|-----|------|
+| [![GitHub Sponsors](https://img.shields.io/badge/GitHub%20Sponsors-0%25%20fee-pink?style=for-the-badge&logo=github)](https://github.com/sponsors/trivenigk) | 0% | github.com/sponsors/trivenigk |
+| [![Ko-fi](https://img.shields.io/badge/Ko--fi-0%25%20platform%20fee-red?style=for-the-badge&logo=ko-fi)](https://ko-fi.com/trivenigk) | 0% platform + 3% Stripe | ko-fi.com/trivenigk |
+| [![PayPal](https://img.shields.io/badge/PayPal-Friends%20%26%20Family-blue?style=for-the-badge&logo=paypal)](https://paypal.me/trivenigk) | 0% F&F | paypal.me/trivenigk |
 
 ## License
 
