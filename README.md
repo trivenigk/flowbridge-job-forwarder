@@ -167,28 +167,6 @@ docker compose restart         # Restart
 
 **Total: $0/month**
 
-## Support
-
-If FlowBridge saves you time, support is appreciated. **Both options below have 0% fees** (Buy Me a Coffee charges ~8% — skipped intentionally).
-
-### 🇺🇸 Zelle (US)
-
-**Email:** `trivenigk@hotmail.com`
-**Name:** Triveni Ganta
-
-<img src="docs/payment/zelle_qr.png" alt="Zelle QR" width="240"/>
-
-### 🇮🇳 UPI / PhonePe (India)
-
-**Name:** Triveni Gopala Krishna Ganta
-
-<img src="docs/payment/upi_qr.png" alt="UPI PhonePe QR" width="240"/>
-
-*Scan QR with any UPI app: PhonePe, GPay, Paytm, BHIM*
-
----
-
-**Why no Buy Me a Coffee / Patreon?** Those charge 5–12% platform fee + processor fee. Direct peer-to-peer transfers are zero-cost.
 
 ## License
 
