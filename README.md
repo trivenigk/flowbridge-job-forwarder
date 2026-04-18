@@ -8,6 +8,14 @@ No APIs to pay for. No manual copy-paste. No screen blocking. Just Docker + a Go
 
 ---
 
+## 🛡️ Legal Notice
+
+**Use at your own risk.** FlowBridge is provided **AS IS** with **no warranty** and **no liability** of any kind. You alone are responsible for installing, deploying, operating, and complying with all applicable laws and third-party Terms of Service (including WhatsApp / Meta, which may prohibit automation and may ban your account). The author has no obligation to support, maintain, or fix the Software. By using FlowBridge in any way, you accept full responsibility for all consequences.
+
+**Read full terms before use:** [DISCLAIMER.md](DISCLAIMER.md) · [LICENSE](LICENSE) · [SECURITY.md](SECURITY.md)
+
+---
+
 ## ⚠️ Before You Install — Know This
 
 FlowBridge runs **on YOUR machine**, not in the cloud. For it to keep working:
@@ -167,10 +175,11 @@ docker compose restart         # Restart
 
 **Total: $0/month**
 
-
-## License
+## License & Disclaimer
 
 MIT License. See [LICENSE](LICENSE).
+
+**Use at your own risk.** No warranty, no liability, no support obligation. See full [DISCLAIMER.md](DISCLAIMER.md) before using.
 
 ## Author
 

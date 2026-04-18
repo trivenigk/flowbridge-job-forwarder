@@ -25,9 +25,15 @@ venv/
 *.log
 agent.log
 
-# IDE
+# IDE / local tooling
 .vscode/
 .idea/
+.claude/
+
+# Personal distribution materials (kept private — not for public repo)
+docs/linkedin/
+docs/zenodo/
+docs/payment/
 
 # OS
 .DS_Store
