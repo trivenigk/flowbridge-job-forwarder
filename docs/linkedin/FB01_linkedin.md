@@ -93,7 +93,7 @@ If you run a job community, a sales team, or any group that needs email-to-messa
 
 ---
 
-**Paper:** [DOI link — to be added after Zenodo publish]
-**GitHub:** [Link — to be added after repo goes public]
+**Paper:** https://doi.org/10.5281/zenodo.19638039
+**GitHub:** https://github.com/trivenigk/flowbridge-job-forwarder
 
 #OpenSource #Automation #Python #Docker #WhatsApp #DataEngineering #JobSearch #ZeroCost #FlowBridge

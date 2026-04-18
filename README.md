@@ -198,10 +198,11 @@ MIT License. See [LICENSE](LICENSE).
 
 **Triveni Ganta** — [LinkedIn](https://www.linkedin.com/in/trivenigk/) | [GitHub](https://github.com/trivenigk)
 
-**Paper:** [Zenodo DOI — to be added]
+**Paper:** [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19638039.svg)](https://doi.org/10.5281/zenodo.19638039)
 
 If you use FlowBridge in your work, please cite:
 ```
 Ganta, T. (2026). FlowBridge: A Zero-Cost Generalized Framework for Cross-Platform
-Email-to-Messaging Automation. Zenodo. https://doi.org/10.5281/zenodo.XXXXXXX
+Email-to-Messaging Automation Using Browser Automation in Containerized Virtual
+Display Environments. Zenodo. https://doi.org/10.5281/zenodo.19638039
 ```

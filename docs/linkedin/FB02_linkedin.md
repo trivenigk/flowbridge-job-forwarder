@@ -109,7 +109,7 @@ FlowBridge processes 11+ jobs daily with 100% accuracy using zero AI. Sometimes 
 
 ---
 
-**Full research paper with detailed benchmarks:** [DOI link]
-**Open source:** [GitHub link]
+**Full research paper with detailed benchmarks:** https://doi.org/10.5281/zenodo.19638039
+**Open source:** https://github.com/trivenigk/flowbridge-job-forwarder
 
 #AI #MachineLearning #Automation #DecisionFramework #RuleBasedVsAI #LLM #Python #Engineering #FlowBridge

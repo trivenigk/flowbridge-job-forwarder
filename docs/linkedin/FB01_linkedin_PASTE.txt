@@ -51,7 +51,7 @@ The Sheet serves as both message queue AND configuration. A "Groups" tab lets an
 
 FlowBridge is open source and the full paper is published on Zenodo.
 
-Paper: [DOI link]
-GitHub: [Link]
+Paper: https://doi.org/10.5281/zenodo.19638039
+GitHub: https://github.com/trivenigk/flowbridge-job-forwarder
 
 #OpenSource #Automation #Python #Docker #WhatsApp #DataEngineering #JobSearch #ZeroCost #FlowBridge

@@ -72,8 +72,8 @@ All from a weekend of being too lazy to copy-paste.
 
 ---
 
-**Paper:** [DOI link]
-**GitHub:** [Link]
+**Paper:** https://doi.org/10.5281/zenodo.19638039
+**GitHub:** https://github.com/trivenigk/flowbridge-job-forwarder
 
 Sometimes the best research starts with "I'm tired of doing this manually."
 
