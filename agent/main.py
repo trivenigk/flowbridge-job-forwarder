@@ -11,9 +11,9 @@ import time
 
 import schedule
 
-from config import CHECK_INTERVAL_SECONDS, LOG_FILE
+from config import CHECK_INTERVAL_SECONDS, CLEANUP_DAYS, LOG_FILE
 from gmail_ingest import ingest_gmail_jobs
-from sheets import get_pending_jobs, mark_sent, mark_failed, get_groups
+from sheets import get_pending_jobs, mark_sent, mark_failed, get_groups, cleanup_old_jobs
 from whatsapp import WhatsAppSender, format_message
 
 # ---------------------------------------------------------------------------
@@ -115,6 +115,15 @@ def process_jobs() -> None:
 # ---------------------------------------------------------------------------
 
 
+def weekly_cleanup() -> None:
+    """Delete sheet rows older than CLEANUP_DAYS with terminal status."""
+    try:
+        deleted = cleanup_old_jobs(CLEANUP_DAYS)
+        logger.info("Weekly cleanup: deleted %d old row(s)", deleted)
+    except Exception:
+        logger.exception("Weekly cleanup failed")
+
+
 def main() -> None:
     global sender
 
@@ -123,6 +132,7 @@ def main() -> None:
 
     logger.info("=== Job Forwarder Agent starting ===")
     logger.info("Check interval: %d seconds", CHECK_INTERVAL_SECONDS)
+    logger.info("Cleanup: weekly, rows older than %d days", CLEANUP_DAYS)
     logger.info("Groups: loaded dynamically from Sheet")
 
     # Start the browser once and keep it open
@@ -135,6 +145,8 @@ def main() -> None:
 
     # Schedule the job
     schedule.every(CHECK_INTERVAL_SECONDS).seconds.do(process_jobs)
+    # Weekly cleanup of old rows — Sunday 03:00 container-local time
+    schedule.every().sunday.at("03:00").do(weekly_cleanup)
 
     # Run once immediately on startup
     process_jobs()

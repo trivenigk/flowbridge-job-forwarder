@@ -19,6 +19,7 @@ CHECK_INTERVAL_SECONDS = 3600  # check every 1 hour
 LOG_FILE = "agent.log"
 MAX_RETRIES = 3
 MESSAGE_MAX_LENGTH = 2000
+CLEANUP_DAYS = int(os.getenv("CLEANUP_DAYS", "7"))  # delete SENT/DUPLICATE/FAILED rows older than this
 
 # Gmail ingestion
 GMAIL_SEARCH_QUERY = os.getenv(
