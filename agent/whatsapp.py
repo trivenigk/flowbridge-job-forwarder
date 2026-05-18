@@ -24,7 +24,13 @@ from selenium.common.exceptions import (
 )
 from webdriver_manager.chrome import ChromeDriverManager
 
-from config import WHATSAPP_WEB_URL, CHROME_PROFILE_PATH, MESSAGE_MAX_LENGTH
+from config import (
+    WHATSAPP_WEB_URL,
+    CHROME_PROFILE_PATH,
+    MESSAGE_MAX_LENGTH,
+    FAILURE_THRESHOLD,
+)
+from notify import send_alert
 
 logger = logging.getLogger(__name__)
 
@@ -39,6 +45,7 @@ class WhatsAppSender:
 
     def __init__(self):
         self.driver = None
+        self._consecutive_failures = 0
 
     @staticmethod
     def _cleanup_profile_locks():
@@ -123,6 +130,63 @@ class WhatsAppSender:
         except WebDriverException:
             logger.warning("Could not inject beforeunload suppressor")
 
+    def _restart_driver(self) -> bool:
+        """Fully close and re-open the Chrome driver. Returns True on success."""
+        logger.warning("Restarting Chrome driver")
+        try:
+            if self.driver:
+                self.driver.quit()
+        except WebDriverException:
+            pass
+        self.driver = None
+        try:
+            self.start()
+            return True
+        except Exception:
+            logger.exception("Driver restart failed")
+            return False
+
+    def _escalate(self) -> None:
+        """Inspect the consecutive failure counter and trigger recovery/alerts.
+
+        Ladder (FAILURE_THRESHOLD defaults to 3):
+          n == THRESHOLD    -> email alert: sends failing
+          n == THRESHOLD*2  -> driver restart + email alert
+          n == THRESHOLD*3  -> critical alert (email + SMS): session dead
+        """
+        n = self._consecutive_failures
+        t = FAILURE_THRESHOLD
+
+        if n == t:
+            send_alert(
+                "send_failures",
+                "[Job Forwarder] WhatsApp sends failing",
+                f"{n} consecutive WhatsApp send failures.\n"
+                "Auto-recovery will reload the page on the next attempt.\n"
+                "Check container logs for details.",
+                critical=False,
+            )
+        elif n == t * 2:
+            logger.warning("Failure count %d hit %d — attempting driver restart", n, t * 2)
+            restart_ok = self._restart_driver()
+            send_alert(
+                "driver_restart",
+                "[Job Forwarder] Chrome driver restarted",
+                f"{n} consecutive failures. Driver restart "
+                f"{'succeeded' if restart_ok else 'FAILED'}.",
+                critical=False,
+            )
+        elif n >= t * 3:
+            send_alert(
+                "session_dead",
+                "[Job Forwarder] WhatsApp session dead — action required",
+                f"{n} consecutive failures, driver restart did not recover.\n"
+                "Action: open http://localhost:6080 (noVNC) or "
+                "vnc://localhost:5900 and re-scan the WhatsApp Web QR code.\n"
+                "Agent will resume automatically on the next cycle.",
+                critical=True,
+            )
+
     def _ensure_chat_pane(self) -> bool:
         """Verify the chat pane is present; reload WA Web if missing.
 
@@ -192,6 +256,8 @@ class WhatsAppSender:
         Returns True on success, False on failure.
         """
         if not self._ensure_chat_pane():
+            self._consecutive_failures += 1
+            self._escalate()
             return False
         try:
             # Click and type in the search box
@@ -241,14 +307,19 @@ class WhatsAppSender:
             time.sleep(SEND_DELAY)
 
             logger.info("Message sent to '%s'", group_name)
+            self._consecutive_failures = 0
             return True
 
         except (TimeoutException, NoSuchElementException) as exc:
             logger.error("Failed to send to '%s': %s", group_name, exc)
+            self._consecutive_failures += 1
+            self._escalate()
             return False
 
         except WebDriverException as exc:
             logger.error("Browser error sending to '%s': %s", group_name, exc)
+            self._consecutive_failures += 1
+            self._escalate()
             return False
 
         finally:

@@ -13,6 +13,7 @@ import schedule
 
 from config import CHECK_INTERVAL_SECONDS, CLEANUP_DAYS, LOG_FILE
 from gmail_ingest import ingest_gmail_jobs
+from notify import send_alert
 from sheets import get_pending_jobs, mark_sent, mark_failed, get_groups, cleanup_old_jobs
 from whatsapp import WhatsAppSender, format_message
 
@@ -73,6 +74,13 @@ def process_jobs() -> None:
                 time.sleep(wait)
             else:
                 logger.exception("Failed to fetch jobs from Google Sheet after 3 attempts")
+                send_alert(
+                    "sheet_fetch_fail",
+                    "[Job Forwarder] Google Sheet unreachable",
+                    "Failed to fetch pending jobs from the Sheet after 3 retries. "
+                    "Check OAuth token, network connectivity, and the GOOGLE_SHEET_ID env var.",
+                    critical=False,
+                )
                 return
 
     if not jobs:
@@ -120,8 +128,14 @@ def weekly_cleanup() -> None:
     try:
         deleted = cleanup_old_jobs(CLEANUP_DAYS)
         logger.info("Weekly cleanup: deleted %d old row(s)", deleted)
-    except Exception:
+    except Exception as exc:
         logger.exception("Weekly cleanup failed")
+        send_alert(
+            "cleanup_fail",
+            "[Job Forwarder] Weekly cleanup failed",
+            f"Exception during cleanup_old_jobs: {exc}",
+            critical=False,
+        )
 
 
 def main() -> None:

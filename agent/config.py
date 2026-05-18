@@ -21,6 +21,16 @@ MAX_RETRIES = 3
 MESSAGE_MAX_LENGTH = 2000
 CLEANUP_DAYS = int(os.getenv("CLEANUP_DAYS", "7"))  # delete SENT/DUPLICATE/FAILED rows older than this
 
+# Alerts (SMTP email + optional SMS via carrier email-to-SMS gateway)
+SMTP_HOST = os.getenv("SMTP_HOST", "")
+SMTP_PORT = int(os.getenv("SMTP_PORT", "587") or "587")
+SMTP_USER = os.getenv("SMTP_USER", "")
+SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "")
+ALERT_EMAIL_TO = os.getenv("ALERT_EMAIL_TO", "")
+ALERT_SMS_TO = os.getenv("ALERT_SMS_TO", "")  # e.g. 5551234567@tmomail.net (T-Mobile)
+FAILURE_THRESHOLD = int(os.getenv("FAILURE_THRESHOLD", "3") or "3")
+ALERT_THROTTLE_SECONDS = int(os.getenv("ALERT_THROTTLE_SECONDS", "3600") or "3600")
+
 # Gmail ingestion
 GMAIL_SEARCH_QUERY = os.getenv(
     "GMAIL_SEARCH_QUERY",
