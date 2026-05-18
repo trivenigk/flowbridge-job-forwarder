@@ -19,6 +19,14 @@ CHECK_INTERVAL_SECONDS = 3600  # check every 1 hour
 LOG_FILE = "agent.log"
 MAX_RETRIES = 3
 MESSAGE_MAX_LENGTH = 2000
+CLEANUP_DAYS = int(os.getenv("CLEANUP_DAYS", "7"))  # delete SENT/DUPLICATE/FAILED rows older than this
+
+# Alerts (sent via the Gmail API using the same OAuth token as ingestion)
+# Optional SMS is sent to a carrier email-to-SMS gateway through the same call.
+ALERT_EMAIL_TO = os.getenv("ALERT_EMAIL_TO", "")
+ALERT_SMS_TO = os.getenv("ALERT_SMS_TO", "")  # e.g. 5551234567@tmomail.net (T-Mobile)
+FAILURE_THRESHOLD = int(os.getenv("FAILURE_THRESHOLD", "3") or "3")
+ALERT_THROTTLE_SECONDS = int(os.getenv("ALERT_THROTTLE_SECONDS", "3600") or "3600")
 
 # Gmail ingestion
 GMAIL_SEARCH_QUERY = os.getenv(

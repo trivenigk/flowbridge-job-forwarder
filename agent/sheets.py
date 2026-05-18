@@ -18,7 +18,8 @@ Sheet columns:
 import json
 import logging
 import os
-from datetime import datetime
+import time
+from datetime import datetime, timedelta
 
 import gspread
 from google.auth.transport.requests import Request
@@ -40,6 +41,7 @@ SCOPES = [
     "https://www.googleapis.com/auth/drive.readonly",
     "https://www.googleapis.com/auth/gmail.readonly",
     "https://www.googleapis.com/auth/gmail.modify",
+    "https://www.googleapis.com/auth/gmail.send",
 ]
 
 
@@ -285,3 +287,43 @@ def mark_failed(row_number: int, retry_count: int) -> None:
         logger.error("Row %d permanently FAILED after %d retries", row_number, new_count)
     else:
         logger.warning("Row %d FAILED (attempt %d/%d, will retry)", row_number, new_count, MAX_RETRIES)
+
+
+def cleanup_old_jobs(days: int = 7) -> int:
+    """Delete rows older than `days` days with status SENT, DUPLICATE, or FAILED.
+
+    Uses column A (ID) first 8 chars as YYYYMMDD source-of-truth.
+    PENDING rows are never deleted regardless of age. Header row is preserved.
+    Returns the number of rows deleted.
+    """
+    ws = _get_worksheet()
+    rows = ws.get_all_values()
+    cutoff = datetime.now() - timedelta(days=days)
+    logger.info("Cleanup scanning %d rows (cutoff: %s)", len(rows), cutoff.strftime("%Y-%m-%d"))
+
+    purge_statuses = {"SENT", "DUPLICATE", "FAILED"}
+    to_delete: list[int] = []
+
+    for i, row in enumerate(rows[1:], start=2):
+        job_id = _safe_get(row, 0)
+        if len(job_id) < 8:
+            continue
+        try:
+            row_date = datetime.strptime(job_id[:8], "%Y%m%d")
+        except ValueError:
+            continue
+        status = _safe_get(row, 1).upper()
+        if row_date < cutoff and status in purge_statuses:
+            to_delete.append(i)
+
+    logger.info("Cleanup: %d rows match (older than %d days, status SENT/DUPLICATE/FAILED)",
+                len(to_delete), days)
+
+    for row_num in reversed(to_delete):
+        try:
+            ws.delete_rows(row_num)
+            time.sleep(0.5)
+        except Exception:
+            logger.exception("Failed to delete row %d", row_num)
+
+    return len(to_delete)
