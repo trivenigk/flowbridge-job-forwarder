@@ -80,6 +80,8 @@ class WhatsAppSender:
         opts.add_argument("--disable-gpu")
         opts.add_argument("--disable-extensions")
         opts.add_argument("--window-size=1920,1080")
+        # Auto-accept beforeunload/alert/confirm dialogs that WhatsApp Web throws
+        opts.set_capability("unhandledPromptBehavior", "accept")
 
         if in_docker:
             # In Docker: use system-installed Chrome, no window manager
@@ -100,12 +102,52 @@ class WhatsAppSender:
                 EC.presence_of_element_located((By.CSS_SELECTOR, 'div[data-tab="3"]'))
             )
             logger.info("WhatsApp Web loaded successfully")
+            self._suppress_beforeunload()
         except TimeoutException:
             logger.error(
                 "WhatsApp Web did not load in time. "
                 "Make sure you are logged in with the Chrome profile."
             )
             raise
+
+    def _suppress_beforeunload(self) -> None:
+        """Disable WhatsApp Web's beforeunload dialog at the DOM level."""
+        try:
+            self.driver.execute_script(
+                "window.onbeforeunload = null;"
+                "window.addEventListener('beforeunload', function(e){"
+                "  e.stopImmediatePropagation(); delete e['returnValue'];"
+                "}, true);"
+            )
+            logger.info("Injected beforeunload suppressor")
+        except WebDriverException:
+            logger.warning("Could not inject beforeunload suppressor")
+
+    def _ensure_chat_pane(self) -> bool:
+        """Verify the chat pane is present; reload WA Web if missing.
+
+        Returns True if pane available after check/reload, False if session is dead.
+        """
+        try:
+            self.driver.find_element(By.CSS_SELECTOR, 'div[data-tab="3"]')
+            return True
+        except NoSuchElementException:
+            pass
+
+        logger.warning("Chat pane missing, reloading WhatsApp Web")
+        try:
+            self.driver.get(WHATSAPP_WEB_URL)
+            WebDriverWait(self.driver, 30).until(
+                EC.presence_of_element_located((By.CSS_SELECTOR, 'div[data-tab="3"]'))
+            )
+            self._suppress_beforeunload()
+            return True
+        except (TimeoutException, WebDriverException):
+            logger.error(
+                "Session dead — scan QR at vnc://localhost:5900 "
+                "(or http://localhost:6080) to re-link WhatsApp Web"
+            )
+            return False
 
     def _find_search_box(self):
         """Find the WhatsApp search input (it's an <input>, not contenteditable)."""
@@ -149,6 +191,8 @@ class WhatsAppSender:
 
         Returns True on success, False on failure.
         """
+        if not self._ensure_chat_pane():
+            return False
         try:
             # Click and type in the search box
             search_box = self._find_search_box()
